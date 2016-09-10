@@ -11,6 +11,7 @@ int main (int argc, char* argv[])
 {
 	char *output_filename_computed;
 	char *output_filename_calculated;
+	char *output_filename_error;
 	//iofstream ofile;
 	int N = atof(argv[1]);
 	double *grid_points = new double[N]; 
@@ -18,6 +19,7 @@ int main (int argc, char* argv[])
 
 	output_filename_computed=argv[2];
 	output_filename_calculated=argv[3];
+	output_filename_error=argv[4];
 
 	double h=1.0/(N+1);
 	double h_squared_100=h*h*100.0;
@@ -64,6 +66,12 @@ int main (int argc, char* argv[])
 		//cout << "V  " << V[k] << endl;
 	}
 	file_writer(output_filename_computed, grid_points, V, N);
+
+	double *relative_error = new double[N];
+	for (int i=0;i<=N-1;i++) {
+		relative_error[i]=(abs((V[i]-analytical_solution[i])/analytical_solution[i]));
+	}
+	file_writer(output_filename_error, grid_points, relative_error, N);
 }
 
 void file_writer(char* filename, double* g_points, double* a_solution, int n ) {
