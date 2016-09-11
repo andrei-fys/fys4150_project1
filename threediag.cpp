@@ -69,8 +69,10 @@ int main (int argc, char* argv[])
 	file_writer(output_filename_computed, grid_points, V, N);
 
 	double *relative_error = new double[N];
+	double *relative_error_log10 = new double[N];
 	for (int i=0;i<=N-1;i++) {
 		relative_error[i]=(abs((V[i]-analytical_solution[i])/analytical_solution[i]));
+		relative_error_log10[i]=log10(relative_error[i]);
 	}
 	file_writer(output_filename_error, grid_points, relative_error, N);
 }
