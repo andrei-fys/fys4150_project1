@@ -3,6 +3,7 @@
 #include <cmath>
 #include <stdlib.h>
 #include "lib.h"
+#include "time.h"
 
 using namespace std;
 
@@ -40,7 +41,7 @@ int main (int argc, char* argv[])
 	double *b_tilda = new double[N];
 	double *b_prime_tilda = new double[N];
 	double *V = new double[N];
-	
+	clock_t g_start, g_finish;
 	for (int i=0;i<=N-2;i++) {
 		a[i]=-1.0;
 		c[i]=-1.0;
@@ -52,6 +53,8 @@ int main (int argc, char* argv[])
 	b[N-1]=2.0;
 	b_prime[0]=b[0];
 	b_prime_tilda[0]=b_tilda[0];
+	
+	g_start = clock();
 	// GAUSS BF START (Fiat)
 	// forward subst.
 	for (int j=1;j<=N-1;j++){
@@ -59,7 +62,6 @@ int main (int argc, char* argv[])
 		b_prime_tilda[j]=b_tilda[j]-a[j-1]*b_prime_tilda[j-1]/b_prime[j-1];
 	}
 	// end of forward subst.
-	
 	// backward subst.
 	V[N-1]=b_prime_tilda[N-1]/b_prime[N-1];
 	for (int k=N-2;k>=0;k--) {
@@ -67,7 +69,7 @@ int main (int argc, char* argv[])
 	}
 	// end of backward subst.
 	// GAUSS BF END
-	
+	g_finish=clock();
 	file_writer(output_filename_computed, grid_points, V, N);
 
 	double *relative_error = new double[N];
@@ -84,13 +86,14 @@ int main (int argc, char* argv[])
 	double thomas_b = 2.0;
 	double ac = 1.0;
 	double *thomas_b_prime = new double[N];
-	//double *thomas_b_tilda = new double[N];
 	double *thomas_b_prime_tilda = new double[N];
 	double *thomas_V = new double[N];
-
+	clock_t t_start, t_finish;
+	
 	thomas_b_prime[0]=thomas_b;
 	thomas_b_prime_tilda[0]=b_tilda[0];
 	
+	t_start = clock();
 	//THOMAS START (Ferrari)
 	//forward subst.
 	for (int j=1;j<=N-1;j++){
@@ -105,8 +108,10 @@ int main (int argc, char* argv[])
 	}
 	//end of backward subst.
 	//THOMAS END
-	
+	t_finish = clock();
 	file_writer(output_filename_thomas, grid_points, thomas_V, N);
+	cout << "Time of Gauss " << ((double) (g_finish-g_start)/CLOCKS_PER_SEC) << endl;
+	cout << "Time of Thomas " << ((double) (t_finish-t_start)/CLOCKS_PER_SEC) << endl;
 }
 
 void file_writer(char* filename, double* g_points, double* a_solution, int n ) {
