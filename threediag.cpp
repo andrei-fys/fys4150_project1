@@ -13,6 +13,7 @@ int main (int argc, char* argv[])
 	char *output_filename_computed;
 	char *output_filename_calculated;
 	char *output_filename_error;
+	char *output_filename_thomas;
 	int N = atof(argv[1]);
 	double *grid_points = new double[N]; 
 	double *analytical_solution = new double[N];
@@ -20,6 +21,7 @@ int main (int argc, char* argv[])
 	output_filename_computed=argv[2];
 	output_filename_calculated=argv[3];
 	output_filename_error=argv[4];
+	output_filename_thomas=argv[5];
 
 	double h=1.0/(N+1);
 	double h_squared_100=h*h*100.0;
@@ -50,7 +52,7 @@ int main (int argc, char* argv[])
 	b[N-1]=2.0;
 	b_prime[0]=b[0];
 	b_prime_tilda[0]=b_tilda[0];
-	// GAUSS BF START
+	// GAUSS BF START (Fiat)
 	// forward subst.
 	for (int j=1;j<=N-1;j++){
 		b_prime[j]=b[j]-a[j-1]*c[j-1]/b_prime[j-1];
@@ -74,7 +76,37 @@ int main (int argc, char* argv[])
 		relative_error[i]=(abs((V[i]-analytical_solution[i])/analytical_solution[i]));
 		relative_error_log10[i]=log10(relative_error[i]);
 	}
+	
 	file_writer(output_filename_error, grid_points, relative_error, N);
+	
+	double thomas_a = -1.0;
+	double thomas_c = -1.0;
+	double thomas_b = 2.0;
+	double ac = 1.0;
+	double *thomas_b_prime = new double[N];
+	//double *thomas_b_tilda = new double[N];
+	double *thomas_b_prime_tilda = new double[N];
+	double *thomas_V = new double[N];
+
+	thomas_b_prime[0]=thomas_b;
+	thomas_b_prime_tilda[0]=b_tilda[0];
+	
+	//THOMAS START (Ferrari)
+	//forward subst.
+	for (int j=1;j<=N-1;j++){
+		thomas_b_prime[j]=thomas_b-ac/thomas_b_prime[j-1];
+		thomas_b_prime_tilda[j]=b_tilda[j]-thomas_a*thomas_b_prime_tilda[j-1]/thomas_b_prime[j-1];
+	}
+	//end of forward subst.
+	//backward subst.
+	thomas_V[N-1]=thomas_b_prime_tilda[N-1]/b_prime[N-1];
+	for (int k=N-2;k>=0;k--) {
+		thomas_V[k]=(thomas_b_prime_tilda[k+1]-thomas_c*thomas_V[k+1])/thomas_b_prime[k];
+	}
+	//end of backward subst.
+	//THOMAS END
+	
+	file_writer(output_filename_thomas, grid_points, thomas_V, N);
 }
 
 void file_writer(char* filename, double* g_points, double* a_solution, int n ) {
