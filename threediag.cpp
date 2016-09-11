@@ -2,6 +2,7 @@
 #include <fstream>
 #include <cmath>
 #include <stdlib.h>
+#include "lib.h"
 
 using namespace std;
 
