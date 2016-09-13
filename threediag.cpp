@@ -15,6 +15,7 @@ int main (int argc, char* argv[])
 	char *output_filename_calculated;
 	char *output_filename_error;
 	char *output_filename_thomas;
+	char *output_filename_LU;
 	int N = atof(argv[1]);
 	double *grid_points = new double[N]; 
 	double *analytical_solution = new double[N];
@@ -23,6 +24,7 @@ int main (int argc, char* argv[])
 	output_filename_calculated=argv[3];
 	output_filename_error=argv[4];
 	output_filename_thomas=argv[5];
+	output_filename_LU=argv[6];
 
 	double h=1.0/(N+1);
 	double h_squared_100=h*h*100.0;
@@ -114,6 +116,7 @@ int main (int argc, char* argv[])
 	cout << "Time of Thomas " << ((double) (t_finish-t_start)/CLOCKS_PER_SEC) << endl;
 
 	//LU decomposition
+	//RHS is precalculated before and stored in b_tilda array
 	double ** AA = new double*[N];
 	for (int i = 0; i < N; i++){
 		AA[i] = new double[N];
@@ -130,10 +133,16 @@ int main (int argc, char* argv[])
 		cout << i << "<-i j->" << j << AA[i][j] << endl;
 		}
 	}
-//	for (int i = 0; i < N; i++){
-//		delete[] AA[i];
-//		delete[] AA;
-//	}
+	int *indx = new int[N];
+	double d;
+	//ludcmp(double **a, int n, int *indx, double *d)
+	ludcmp(AA, N, indx, &d);
+	lubksb(AA, N, indx, b_tilda);
+	file_writer(output_filename_LU, grid_points, b_tilda, N);              
+	for (int i = 0; i < N; i++){
+		delete[] AA[i];
+		delete[] AA;
+	}
 }
 
 void file_writer(char* filename, double* g_points, double* a_solution, int n ) {
