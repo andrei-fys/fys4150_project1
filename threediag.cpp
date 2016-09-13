@@ -112,6 +112,28 @@ int main (int argc, char* argv[])
 	file_writer(output_filename_thomas, grid_points, thomas_V, N);
 	cout << "Time of Gauss " << ((double) (g_finish-g_start)/CLOCKS_PER_SEC) << endl;
 	cout << "Time of Thomas " << ((double) (t_finish-t_start)/CLOCKS_PER_SEC) << endl;
+
+	//LU decomposition
+	double ** AA = new double*[N];
+	for (int i = 0; i < N; i++){
+		AA[i] = new double[N];
+	}
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < N; j++){
+		//AA[i][j] = 0.0;
+		if (i == j) AA[i][j] = 2.0;
+		if (abs(i - j) == 1) AA[i][j] = -1.0;
+		}
+	}
+	for (int i = 0; i < N; i++){
+		for (int j = 0; j < N; j++){
+		cout << i << "<-i j->" << j << AA[i][j] << endl;
+		}
+	}
+//	for (int i = 0; i < N; i++){
+//		delete[] AA[i];
+//		delete[] AA;
+//	}
 }
 
 void file_writer(char* filename, double* g_points, double* a_solution, int n ) {
