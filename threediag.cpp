@@ -127,9 +127,8 @@ int main (int argc, char* argv[])
 	delete [] thomas_b_prime;
 	delete [] thomas_b_prime_tilda;
 	delete [] thomas_V;
-	delete [] b_tilda;
 
-	if (N < 100000) {
+	if (N <= 1000) {
 		//LU decomposition
 		//RHS is precalculated before and stored in b_tilda array
 		double ** AA = new double*[N];
@@ -162,6 +161,7 @@ int main (int argc, char* argv[])
 	cout << "Time of Gauss " << ((double) (g_finish-g_start)/CLOCKS_PER_SEC) << endl;
 	cout << "Time of Thomas " << ((double) (t_finish-t_start)/CLOCKS_PER_SEC) << endl;
 	
+//	delete [] b_tilda;
 //	for (int i = 0; i < N; i++){
 //		delete[] AA[i];
 //		delete[] AA;
