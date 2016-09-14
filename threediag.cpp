@@ -84,14 +84,14 @@ int main (int argc, char* argv[])
 	
 	file_writer(output_filename_error, grid_points, relative_error, N);
 
-	delete [] relative_error;
-	delete [] relative_error_log10;
-	delete [] b_prime;
-	delete [] b_prime_tilda;
-	delete [] a;
-	delete [] b;
-	delete [] c;
-	delete [] V;
+//	delete [] relative_error;
+//	delete [] relative_error_log10;
+//	delete [] b_prime;
+//	delete [] b_prime_tilda;
+//	delete [] a;
+//	delete [] b;
+//	delete [] c;
+//	delete [] V;
 	
 	double thomas_a = -1.0;
 	double thomas_c = -1.0;
@@ -124,9 +124,9 @@ int main (int argc, char* argv[])
 	
 	file_writer(output_filename_thomas, grid_points, thomas_V, N);
 
-	delete [] thomas_b_prime;
-	delete [] thomas_b_prime_tilda;
-	delete [] thomas_V;
+//	delete [] thomas_b_prime;
+//	delete [] thomas_b_prime_tilda;
+//	delete [] thomas_V;
 
 	if (N <= 1000) {
 		//LU decomposition
@@ -160,7 +160,21 @@ int main (int argc, char* argv[])
 	
 	cout << "Time of Gauss " << ((double) (g_finish-g_start)/CLOCKS_PER_SEC) << endl;
 	cout << "Time of Thomas " << ((double) (t_finish-t_start)/CLOCKS_PER_SEC) << endl;
-	
+
+	delete [] relative_error;
+	delete [] relative_error_log10;
+	delete [] b_prime;
+	delete [] b_prime_tilda;
+	delete [] a;
+	delete [] b;
+	delete [] c;
+	delete [] V;
+
+	delete [] thomas_b_prime;
+	delete [] thomas_b_prime_tilda;
+	delete [] thomas_V;
+
+
 //	delete [] b_tilda;
 //	for (int i = 0; i < N; i++){
 //		delete[] AA[i];
