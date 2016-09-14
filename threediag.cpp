@@ -111,13 +111,13 @@ int main (int argc, char* argv[])
 	//end of backward subst.
 	//THOMAS END
 	t_finish = clock();
+	
 	file_writer(output_filename_thomas, grid_points, thomas_V, N);
-	cout << "Time of Gauss " << ((double) (g_finish-g_start)/CLOCKS_PER_SEC) << endl;
-	cout << "Time of Thomas " << ((double) (t_finish-t_start)/CLOCKS_PER_SEC) << endl;
 
 	//LU decomposition
 	//RHS is precalculated before and stored in b_tilda array
 	double ** AA = new double*[N];
+	clock_t LU_start, LU_finish;
 	for (int i = 0; i < N; i++){
 		AA[i] = new double[N];
 	}
@@ -128,21 +128,27 @@ int main (int argc, char* argv[])
 		if (abs(i - j) == 1) AA[i][j] = -1.0;
 		}
 	}
-	for (int i = 0; i < N; i++){
-		for (int j = 0; j < N; j++){
-		cout << i << "<-i j->" << j << AA[i][j] << endl;
-		}
-	}
 	int *indx = new int[N];
 	double d;
 	//ludcmp(double **a, int n, int *indx, double *d)
+	
+	//LU decomposition start
+	LU_start = clock();
 	ludcmp(AA, N, indx, &d);
 	lubksb(AA, N, indx, b_tilda);
+	LU_finish = clock();
+	//LU decomposition end
+	
 	file_writer(output_filename_LU, grid_points, b_tilda, N);              
-	for (int i = 0; i < N; i++){
-		delete[] AA[i];
-		delete[] AA;
-	}
+	
+	cout << "Time of Gauss " << ((double) (g_finish-g_start)/CLOCKS_PER_SEC) << endl;
+	cout << "Time of Thomas " << ((double) (t_finish-t_start)/CLOCKS_PER_SEC) << endl;
+	cout << "Time of LU " << ((double) (LU_finish-LU_start)/CLOCKS_PER_SEC) << endl;
+	
+//	for (int i = 0; i < N; i++){
+//		delete[] AA[i];
+//		delete[] AA;
+//	}
 }
 
 void file_writer(char* filename, double* g_points, double* a_solution, int n ) {
