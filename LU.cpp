@@ -17,7 +17,7 @@ int main (int argc, char* argv[])
 
 	output_filename_LU=argv[2];
 
-	double h=1.0/(N+1);
+	double h=1.0/(N+1.0);
 	double h_squared_100=h*h*100.0;
 	
 	for (int i=0; i<N; i++) {
@@ -29,7 +29,7 @@ int main (int argc, char* argv[])
 		b_tilda[i]=h_squared_100*exp(-10.0*grid_points[i]);                     
 	} // RHS of the equation
 	
-	if (N <= 1000) {
+	if (N <= 10000) {
 		//LU decomposition
 		//RHS is precalculated before and stored in b_tilda array
 		double ** AA = new double*[N];

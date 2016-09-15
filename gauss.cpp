@@ -23,7 +23,7 @@ int main (int argc, char* argv[])
 	output_filename_error=argv[4];
 	output_filename_thomas=argv[5];
 
-	double h=1.0/(N+1);
+	double h=1.0/(N+1.0);
 	double h_squared_100=h*h*100.0;
 	double precalc_exp=1.0-exp(-10.0);
 	
@@ -69,7 +69,7 @@ int main (int argc, char* argv[])
 	// backward subst.
 	V[N-1]=b_prime_tilda[N-1]/b_prime[N-1];
 	for (int k=N-2;k>=0;k--) {
-		V[k]=(b_prime_tilda[k+1]-c[k]*V[k+1])/b_prime[k];
+		V[k]=(b_prime_tilda[k]-c[k]*V[k+1])/b_prime[k];
 	}
 	// end of backward subst.
 	// GAUSS BF END
@@ -109,7 +109,7 @@ int main (int argc, char* argv[])
 	//backward subst.
 	thomas_V[N-1]=thomas_b_prime_tilda[N-1]/thomas_b_prime[N-1];
 	for (int k=N-2;k>=0;k--) {
-		thomas_V[k]=(thomas_b_prime_tilda[k+1]-thomas_c*thomas_V[k+1])/thomas_b_prime[k];
+		thomas_V[k]=(thomas_b_prime_tilda[k]-thomas_c*thomas_V[k+1])/thomas_b_prime[k];
 	}
 	//end of backward subst.
 	//THOMAS END
