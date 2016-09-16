@@ -13,6 +13,7 @@ int main (int argc, char* argv[])
 	char *output_filename_computed;
 	char *output_filename_calculated;
 	char *output_filename_error;
+	char *output_filename_error_log;
 	char *output_filename_thomas;
 	int N = atof(argv[1]);
 	double *grid_points = new double[N]; 
@@ -22,6 +23,7 @@ int main (int argc, char* argv[])
 	output_filename_calculated=argv[3];
 	output_filename_error=argv[4];
 	output_filename_thomas=argv[5];
+	output_filename_error_log=argv[6];
 
 	double h=1.0/(N+1.0);
 	double h_squared_100=h*h*100.0;
@@ -83,7 +85,18 @@ int main (int argc, char* argv[])
 		relative_error[i]=(abs((V[i]-analytical_solution[i])/analytical_solution[i]));
 		relative_error_log10[i]=log10(relative_error[i]);
 	}
-	
+	double max_rel_err = 0.0; 
+	for (int i=0;i<=N-1;i++) {
+		if (relative_error[i] >= max_rel_err ){
+			max_rel_err = relative_error[i];
+		}
+	}
+	ofstream ofile;
+	ofile.open(output_filename_error_log, ios::app);
+	ofile << log10(h) << "," <<  log10(max_rel_err) <<  endl;
+	ofile.close();
+
+	//file_writer(output_filename_error_log, relative_error, relative_error_log10, N);
 	file_writer(output_filename_error, grid_points, relative_error, N);
 
 	double thomas_a = -1.0;
