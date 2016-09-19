@@ -2,6 +2,7 @@
 \usepackage{mathtools}
 \usepackage{amsmath}
 \usepackage{tabularx}
+\usepackage{graphicx}
 
 \begin{document}
 \setlength\parindent{1pt}
@@ -148,16 +149,24 @@ In this part we represent results obtained by Gaussian elimination and LU decomp
   \begin{center}
     \begin{tabular}{c|c|c|c}
     \hline
-        N & Gaussian elimination & Gaussian elimination optimized & LU decomposition \\
+        N & Gaussian elimination, $s$ & Gaussian elimination, optimized, $s$ & LU decomposition, $s$ \\
         \hline
-        10 & $3 \times 10^{-6}$ & $1 \times 10^{-6}$ & $1.9 \times 10^{-5}$ \\
-        100 & $5 \times 10^{-6}$ & $5 \times 10^{-6}$ & $2.7 \times 10^{-3}$\\
-        1000 & $5.2 \times 10^{-5}$ & $4.7 \times 10^{-5}$ & $1.8$\\
-        10000 & $3.2 \times 10^{-4}$ & $2.5 \times 10^{-4}$ & $2.6 \times 10^{3}$\\
-        100000 & $2.8 \times 10^{-3}$ & $2.7 \times 10^{-3}$ & -\\
+        $10$ & $3 \times 10^{-6}$ & $1 \times 10^{-6}$ & $1.9 \times 10^{-5}$ \\
+        $10^2$ & $5 \times 10^{-6}$ & $5 \times 10^{-6}$ & $2.7 \times 10^{-3}$\\
+        $10^3$ & $5.2 \times 10^{-5}$ & $4.7 \times 10^{-5}$ & $1.8$\\
+        $10^4$ & $3.2 \times 10^{-4}$ & $2.5 \times 10^{-4}$ & $2.6 \times 10^{3}$\\
+        $10^5$ & $2.8 \times 10^{-3}$ & $2.7 \times 10^{-3}$ & -\\
     \end{tabular}
   \end{center}
 \end{table}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[scale=0.5]{relative_error_log}
+    \caption{Dependency between maximum relative error and domain discretization step size on logarithmic scale. Roughly estimation of convergence rate is $2.2$. Round-off errors dominate for the small step size (less then $10^{-5}$).}
+    \label{fig:error}
+  \end{center}
+\end{figure}
 
 \subsection{Discussion}
 
