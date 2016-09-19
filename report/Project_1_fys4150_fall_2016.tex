@@ -128,11 +128,19 @@ After this we also need to change the right hand side part of the SLAE, the vect
                            \prime{\tilde{b}_n}=\tilde{b}_n - \tilde{b}_{n-1}\frac{a_{n-1}}{b_{n-1}}\\
                       \end{array} \right).
 \end{equation}
-What we have done so far is so called forward substitution. The GE consist of two big parts: the forward substitution (FS) and the backward substitution(BS). After we done the FS we should perform the BS to find the unknown vector $ v $ form (3).
-//*
-!!!DOPISAT!!!
-//*
-This is our brute force algorithm for GE. In the program we will, however test two algorithms. The second one is a bit adjusted to our case where we have all the same algorithms along the diagonals, so we can just pre-calculate some coefficients. In the results section we will go back to it and compare the time needed to implement the algorithms in a adjusted and in a brute force way.
+What we have done so far is so called forward substitution. The GE consist of two big parts: the forward substitution (FS) and the backward substitution(BS). After we done the FS we should perform the BS to find the unknown vector $ v $ form (3). \\
+We start with finding $ v_{n} $ and go up to $ v_{1} $
+\begin{equation}
+\begin{cases}
+v_{n}=  \frac{\prime{\tilde{b}_n}}{\prime{b}_n}\\ 
+v_{n-1}=  \frac{\prime{\tilde{b}_{n-1}-c_{n-1}v_{n}}}{\prime{b}_{n-1}}  \\ 
+\dots   \\ 
+\dots  \\ 
+v_{1}= \frac{\prime{\tilde{b}_{1}-c_{1}v_{2}}}{\prime{b}_{1}} \\
+\end{cases},
+\end{equation}
+
+This is our brute force algorithm for GE in case of tridiagonal matrix (so called Thomas method). In the program we will, however test two algorithms. The second one is a bit adjusted to our case where we have all the same elements along the diagonals, so we can just pre-calculate some coefficients. In the results section we will go back to it and compare the time needed to implement the algorithms in a adjusted and in a brute force way.
 \subsection{LU decomposition}
 This is another way to solve (3) using the linear algebra methods. In this case we will look for a way to write a matrix $ A $ in a following form
 \begin{equation}
