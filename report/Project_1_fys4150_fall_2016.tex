@@ -157,7 +157,7 @@ In this part we represent results obtained by Gaussian elimination and LU decomp
   \begin{center}
     \begin{tabular}{c|c|c|c}
     \hline
-        N & Gaussian elimination, $s$ & Gaussian elimination, optimized, $s$ & LU decomposition, $s$ \\
+        N & Gaussian el., $s$ & Gaussian el., optimized, $s$ & LU decomposition, $s$ \\
         \hline
         $10$ & $3 \times 10^{-6}$ & $1 \times 10^{-6}$ & $1.9 \times 10^{-5}$ \\
         $10^2$ & $5 \times 10^{-6}$ & $5 \times 10^{-6}$ & $2.7 \times 10^{-3}$\\
@@ -170,11 +170,20 @@ In this part we represent results obtained by Gaussian elimination and LU decomp
 
 \begin{figure}
   \begin{center}
-    \includegraphics[scale=0.5]{relative_error_log}
+    \includegraphics[scale=0.7]{relative_error_log}
     \caption{Dependency between maximum relative error and domain discretization step size on logarithmic scale. Roughly estimation of convergence rate is $2.2$. Round-off errors dominate for the small step size (less then $10^{-5}$).}
     \label{fig:error}
   \end{center}
 \end{figure}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[scale=0.7]{100x100}
+    \caption{Numerical($V_i$) and exact($U_i$) solutions plotted for $100$ grid points. }
+    \label{fig:gauss100}
+  \end{center}
+\end{figure}
+
 
 \subsection{Discussion}
 
