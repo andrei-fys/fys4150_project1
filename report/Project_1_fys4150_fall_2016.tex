@@ -13,8 +13,7 @@ FYS 4150
 
 \maketitle
 \begin{abstract}
-In this work the one-dimensional Poisson equation with Dirichlet boundary conditions by rewriting it as a set of linear equations.
-Gaussian elimination and LU decomposition methods give us same numerical precision but different CPU time. At large numbers of grid points round-off errors dominate. 
+In this work we solve the one-dimensional Poisson equation with Dirichlet boundary conditions by rewriting it a set of linear equations. The latter was solved by some linear algebra methods: Gaussian elimination and LU decomposition. Both methods are applicable for such task, but differ in CPU time. Numerical precision is the same. Solution converges, except for the big matrix sizes where the convergence is destroyed by the round-off effects.
 \end{abstract}
 \clearpage 
 
@@ -151,8 +150,9 @@ here $ L $ is lower triangular matrix and $ U $ is upper triangular matrix. It's
 
 \section{Results and discussion}
 
-In this part we represent results obtained by Gaussian elimination and LU decomposition numerical methods. We compare efficiency of these two methods and make rough estimation of convergence rate.
-Table \ref{tab:one} represents time measurement results for three algorithms: the brute force GE for tridiagonal matrices, the optimized GE for tridiagonal matrices and LU decomposition. As we expect the slowest algorithm is LU decomposition while both GE algorithms give slightly different result of computation time. One can see that CPU time correlates with number of floating point operations discussed in section 2. Power factor of time multiplier is same for both GE algorithms, that is predictable result from theory. Number of floating point operations for these two methods differ only in coefficient. It is difficult to compare LU decomposition algorithm CPU time with CPU time for GE as LU in our particular case has much more RAM read-write operations which add extra-time. We used three vectors in our GE algorithm realization while for LU we initialized whole matrix of size $N \times N$. It leads to significant RAM requirements for big matrices regarding LU decomposition. We were unable to use LU decomposition for matrix of size $10^5 \times 10^5$ on our computer with just 8 GB of RAM while it could be possible with 80 GB of RAM. However a strong advantage of LU decomposition method is that right-hand sides are not needed to be known in advance as in GE method.
+In this part we present results obtained by Gaussian elimination and LU decomposition numerical methods. We compare efficiency of these two methods and make rough estimation for the convergence rate.
+Table \ref{tab:one} represents time measurement results for three algorithms: the brute force GE for tridiagonal matrices, the optimized GE for tridiagonal matrices and LU decomposition. As we expect the slowest algorithm is LU decomposition while both GE algorithms give slightly different result of computation time. One can see that CPU time correlates with number of floating point operations discussed in section 2.
+Both GE algorithms have the same factor of ten, that corresponds to what we have predicted from the theoretical approach. Number of floating point operations for these two methods differ just a bit. On the other hand it is difficult to analyze LU decomposition algorithm CPU time and CPU time for GE as LU in our particular case has much more RAM read-write operations which add extra-time. We used three vectors in our GE algorithm realization while for LU we initialized whole matrix of size $n \times n$. It leads to significant RAM requirements for big matrices regarding LU decomposition. We were unable to use LU decomposition for matrix of size $10^5 \times 10^5$ on our computer with just 8 GB of RAM while it could be possible with 80 GB of RAM. However a strong advantage of LU decomposition method is that right-hand sides are not needed to be known in advance as in GE method.
 In our particular case LU decomposition is rather overkill and not optimal usage of computer resources nevertheless it can be used for a smaller values of $N$ to compare results of our GE algorithm as both methods have same numerical precision.
 
 \begin{table}
