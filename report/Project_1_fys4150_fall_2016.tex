@@ -147,9 +147,13 @@ This is another way to solve (3) using the linear algebra methods. In this case 
 A=LU
 \end{equation}
 here $ L $ is lower triangular matrix and $ U $ is upper triangular matrix. It's important that $ L $ to have only $ 1 $ on the main diagonal. Easy to show that $ \det A $ in this case is equal to $ \det U $. In order to impliment this method we are going to use one of the libraries in C++, so I will not derive the algorithm here. The most important thing here is that we will need the whole matrix $ A $, not the the arrays that represent the diagonal as we can do it in the GE.
+
 \section{Results and discussion}
-\subsection{Results}
+
 In this part we represent results obtained by Gaussian elimination and LU decomposition numerical methods. We compare efficiency of these two methods and make rough estimation of convergence rate.
+Table \ref{tab:one} represents time measurement results for three algorithms: the brute force GE for tridiagonal matrices, the optimized GE for tridiagonal matrices and LU decomposition. As we expect the slowest algorithm is LU decomposition while both GE algorithms give slightly different result of computation time. One can see that CPU time correlates with number of floating point operations discussed in section 2. Power factor of time multiplier is same for both GE algorithms, that is predictable result from theory. Number of floating point operations for these two methods differ only in coefficient. It is difficult to compare LU decomposition algorithm CPU time with CPU time for GE as LU in our particular case has much more RAM read-write operations which add extra-time. We used three vectors in our GE algorithm realization while for LU we initialized whole matrix of size $N \times N$. It leads to significant RAM requirements for big matrices regarding LU decomposition. We were unable to use LU decomposition for matrix of size $10^5 \times 10^5$ on our computer with just 8 GB of RAM while it could be possible with 80 GB of RAM. However a strong advantage of LU decomposition method is that right-hand sides are not needed to be known in advance as in GE method.
+In our particular case LU decomposition is rather overkill and not optimal usage of computer resources nevertheless it can be used for a smaller values of $N$ to compare results of our GE algorithm as both methods have same numerical precision.
+
 \begin{table}
   \caption{CPU time for Gaussian elimination(both brute force and optimized) and LU decomposition for tridiagonal matrices of N-dimensionality. Calculations were performed on Intel architecture CPU i7-3615QM.}
   \label{tab:one}
@@ -167,6 +171,14 @@ In this part we represent results obtained by Gaussian elimination and LU decomp
     \end{tabular}
   \end{center}
 \end{table}
+On figure \ref{fig:gauss100} numerical($V_i$) and exact($U_i$) solutions plotted for $100$ grid points. One can see computed values fits quite good exact solution. Relative error is no larger than $0.82\%$ for $100$ grid points. Relative error decreases with slope $~2.2$ with step size decrease. Deceasing trend continues till $10^5$ grid points as it shown on figure \ref{fig:error}. With a number of grid points larger then $10^5$ one can see domination of round-off error becomes stronger.
+\begin{figure}
+  \begin{center}
+    \includegraphics[scale=0.7]{100x100}
+    \caption{Numerical($V_i$) and exact($U_i$) solutions plotted for $100$ grid points. The numerical solution was obtained by Gauss elimination algorithm. To show the difference between numerical and exact solution at given grid size we represent magnified(12 times) part of a graph.}
+    \label{fig:gauss100}
+  \end{center}
+\end{figure}
 
 \begin{figure}
   \begin{center}
@@ -176,15 +188,6 @@ In this part we represent results obtained by Gaussian elimination and LU decomp
   \end{center}
 \end{figure}
 
-\begin{figure}
-  \begin{center}
-    \includegraphics[scale=0.7]{100x100}
-    \caption{Numerical($V_i$) and exact($U_i$) solutions plotted for $100$ grid points. }
-    \label{fig:gauss100}
-  \end{center}
-\end{figure}
 
-
-\subsection{Discussion}
 
 \end{document}
