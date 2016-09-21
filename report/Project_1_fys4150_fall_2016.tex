@@ -111,11 +111,11 @@ The new matrix will look as follows
 \begin{equation}
     {\bf A} = \left(\begin{array}{cccccc}
                              b_1& c_1 & 0 &\dots   & \dots &\dots \\
-                           0 & {b_2}\textprime=b_2-\frac{a_1}{b_1} & c_2 &\dots &\dots &\dots \\
-                           & 0 & {b_3}\textprime=b_3-\frac{a_2}{b_2} & c_3 & \dots & \dots \\
+                           0 & {b_2}\textprime=b_2-c_{1}\frac{a_1}{b_1} & c_2 &\dots &\dots &\dots \\
+                           & 0 & {b_3}\textprime=b_3-c_{2}\frac{a_2}{{b_2}\textprime} & c_3 & \dots & \dots \\
                            & \dots   & \dots &\dots   &\dots & \dots \\
                            &   &  &0  &\dots & c_{n-1} \\
-                           &    &  &   &0 & {b_n}\textprime=b_{n}-\frac{a_{n-1}}{b_{n-1}} \\
+                           &    &  &   &0 & {b_n}\textprime=b_{n}-c_{n-1}\frac{a_{n-1}}{{b_{n-1}}\textprime} \\
                       \end{array} \right),
 \end{equation}
 After this we also need to change the right hand side part of the SLAE, the vector $ \tilde{b} $. It will now be written as follows
@@ -141,7 +141,7 @@ v_{1}= \frac{{\tilde{b}\textprime_{1}-c_{1}v_{2}}}{{b}\textprime_{1}} \\
 \end{cases},
 \end{equation}
 
-This is brute force algorithm for GE in case of tridiagonal matrix (sometimes called Thomas algorithm). This arlorithm require $ 8n-1 $ floating points operations (FLOPS). In the program we will, however test two algorithms. The second one is adjusted to our case where we have same elements along the diagonals, so we can just pre-calculate some coefficients. We call this impimentation the optimized GE and it is easy to show that such optimization reduces the number of FLOPS to $ 6n-5 $. In the results section we will go back to it and compare the time needed to implement the algorithms in a adjusted and in a brute force way. Code section with implementation of algorithm can be found at \url{https://github.com/andrei-fys/fys4150_project1/blob/master/gauss.cpp#L64:L77}.
+This is brute force algorithm for GE in case of tridiagonal matrix (sometimes called Thomas algorithm). This arlorithm require $ 9n-8 $ floating points operations (FLOPS). In the program we will, however test two algorithms. The second one is adjusted to our case where we have same elements along the diagonals, so we can just pre-calculate some coefficients. We call this impimentation the optimized GE and it is easy to show that such optimization reduces the number of FLOPS to $ 7n-6 $. In the results section we will go back to it and compare the time needed to implement the algorithms in a adjusted and in a brute force way. Code section with implementation of algorithm can be found at \url{https://github.com/andrei-fys/fys4150_project1/blob/master/gauss.cpp#L64:L77}.
 
 \subsection{LU decomposition}
 This is another way to solve (3) using the linear algebra methods. In this case we will look for a way to write a matrix $ A $ in a following form
