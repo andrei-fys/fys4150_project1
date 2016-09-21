@@ -141,14 +141,16 @@ v_{1}= \frac{{\tilde{b}\textprime_{1}-c_{1}v_{2}}}{{b}\textprime_{1}} \\
 \end{cases},
 \end{equation}
 
-This is brute force algorithm for GE in case of tridiagonal matrix (sometimes called Thomas algorithm). In the program we will, however test two algorithms. The second one is adjusted to our case where we have same elements along the diagonals, so we can just pre-calculate some coefficients. In the results section we will go back to it and compare the time needed to implement the algorithms in a adjusted and in a brute force way. Code section with implementation of algorithm can be found at \url{https://github.com/andrei-fys/fys4150_project1/blob/master/gauss.cpp#L64:L77}.
+This is brute force algorithm for GE in case of tridiagonal matrix (sometimes called Thomas algorithm). This arlorithm require $ 8n-1 $ floating points operations (FLOPS). In the program we will, however test two algorithms. The second one is adjusted to our case where we have same elements along the diagonals, so we can just pre-calculate some coefficients. We call this impimentation the optimized GE and it is easy to show that such optimization reduces the number of FLOPS to $ 6n-5 $. In the results section we will go back to it and compare the time needed to implement the algorithms in a adjusted and in a brute force way. Code section with implementation of algorithm can be found at \url{https://github.com/andrei-fys/fys4150_project1/blob/master/gauss.cpp#L64:L77}.
 
 \subsection{LU decomposition}
 This is another way to solve (3) using the linear algebra methods. In this case we will look for a way to write a matrix $ A $ in a following form
 \begin{equation}
 A=LU
 \end{equation}
-here $ L $ is lower triangular matrix and $ U $ is upper triangular matrix. It's important that $ L $ to have only $ 1 $ on the main diagonal. Easy to show that $ \det A $ in this case is equal to $ \det U $. In order to impliment this method we are going to use one of the libraries in C++, so I will not derive the algorithm here. The most important thing here is that we will need the whole matrix $ A $, not the the arrays that represent the diagonal as we can do it in the GE.
+here $ L $ is lower triangular matrix and $ U $ is upper triangular matrix. It's important that $ L $ to have only $ 1 $ on the main diagonal. Easy to show that $ \det A $ in this case is equal to $ \det U $. In order to implement this method we are going to use one of the libraries in C++, so I will not derive the algorithm here. For the detailed mathematical description please refer to \cite{one}. The detailed programming implimentation is discussed in \cite{two}.
+The most important thing here is that we will need the whole matrix $ A $, not the the arrays that represent the diagonal as we can do it in the GE. The number of FLOPS for such algorithm is proportional to $ n^{3} $.
+
 \newpage
 \section{Results and discussion}
 
@@ -193,5 +195,21 @@ On figure \ref{fig:gauss100} numerical($V_i$) and exact($U_i$) solutions plotted
 \newpage
 \section{Conclusion and further research}
 In this project we apply the linear algebra methods for the SLAE obtained after discretization of Poisson equation. It turns out that both Gaussian Elimination and LU decomposition gives us the same numerical precision. However, the LU decomposition takes much more CPU time. At the same time the problem we solved was quite simple, for more complicated tasks, for example, finding the inverse of the matrix LU should be a much better tool to be used.
-One of the possibilities for further research can by using the parallel programming and GPU not CPU for the LU decomposition. This should allow us to speed up the process and deal with much bigger matrices.
+
+\newpage
+\begin{thebibliography}{9}
+\bibitem{one} 
+Morten Hjorth-Jensen. 
+\textit{Computational Physics
+}. 
+Lecture Notes Fall 2015, August 2015.
+ W. Press, B. Flannery, S. Teukolsky, W. Vetterling, Numerical Recipes in C++, The art of scientific Computing (Cambridge University Press, 1999)
+
+\bibitem{two} 
+W. Press, B. Flannery, S. Teukolsky, W. Vetterling 
+\textit{Numerical Recipes in C++, The art of scientific Computing}. 
+Cambridge University Press, 1999.
+ 
+\end{thebibliography}
+
 \end{document}
