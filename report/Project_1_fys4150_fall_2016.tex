@@ -147,7 +147,7 @@ This is another way to solve (3) using the linear algebra methods. In this case 
 A=LU
 \end{equation}
 here $ L $ is lower triangular matrix and $ U $ is upper triangular matrix. It's important that $ L $ to have only $ 1 $ on the main diagonal. Easy to show that $ \det A $ in this case is equal to $ \det U $. In order to impliment this method we are going to use one of the libraries in C++, so I will not derive the algorithm here. The most important thing here is that we will need the whole matrix $ A $, not the the arrays that represent the diagonal as we can do it in the GE.
-
+\newpage
 \section{Results and discussion}
 
 In this part we present results obtained by Gaussian elimination and LU decomposition numerical methods. We compare efficiency of these two methods and make rough estimation for the convergence rate.
@@ -188,7 +188,7 @@ On figure \ref{fig:gauss100} numerical($V_i$) and exact($U_i$) solutions plotted
     \label{fig:error}
   \end{center}
 \end{figure}
-
+\newpage
 \section{Conclusion and further research}
 In this project we apply the linear algebra methods for the SLAE obtained after discretization of Poisson equation. It turns out that both Gaussian Elimination and LU decomposition gives us the same numerical precision. However, the LU decomposition takes much more CPU time. At the same time the problem we solved was quite simple, for more complicated tasks, for example, finding the inverse of the matrix LU should be a much better tool to be used.
 One of the possibilities for further research can by using the parallel programming and GPU not CPU for the LU decomposition. This should allow us to speed up the process and deal with much bigger matrices.
