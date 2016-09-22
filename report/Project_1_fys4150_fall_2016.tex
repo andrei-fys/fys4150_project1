@@ -29,7 +29,7 @@ In this project we take a look at Poisson equation for electrostatic potential g
 In Part 3. the results are presented. We took the most important data and present it with critical discussion of algorithms. The last part of the report is Conclusion where we sum up all results and come up with the possible topics for the further studies  in this topic. 
 
 \section{Problem formulation}
-The problem we deal with is a second order differential equation (DE) with inhomogenious term. Generally it can be written in a following form:
+The problem we deal with is a second order differential equation (DE) with inhomogeneous term. Generally it can be written in a following form:
 \[
 \frac{d^2y}{dx^2}+k^2(x)y = f(x),
 \]
@@ -44,7 +44,7 @@ This is equation for three dimensions. We simplify this to one dimension equatio
 -u''(x) = f(x), \hspace{0.5cm} x\in(0,1), \hspace{0.3cm} u(0) = u(1) = 0.
 \end{equation}
 
-Here we introduce a disctretization of the derivative. In order to do it we discretize a domain and define grid points for the $ x $. We have $x\rightarrow x_{i}$ which corresponds to discretized value of a function in this point $u(x_{i})\rightarrow v_i$. For simplisity we have the same distance between all grid point and this is our step lenght $ h $. Each grid poin can now be calculated as $x_i=ih$. The valuse $ h $ can be calculated as $h=1/(n+1)$. And the boundary condition is now defined as $v_0 = v_{n+1} = 0$ where $ n $ is a number of steps. The discretized Poisson equation then will be
+Here we introduce a discretization of the derivative. In order to do it we discretize a domain and define grid points for the $ x $. We have $x\rightarrow x_{i}$ which corresponds to discretized value of a function in this point $u(x_{i})\rightarrow v_i$. For simplicity we have the same distance between all grid point and this is our step length $ h $. Each grid poin can now be calculated as $x_i=ih$. The values $ h $ can be calculated as $h=1/(n+1)$. And the boundary condition is now defined as $v_0 = v_{n+1} = 0$ where $ n $ is a number of steps. The discretized Poisson equation then will be
 \[
    -\frac{v_{i+1}+v_{i-1}-2v_i}{h^2} = f_i  \hspace{0.5cm} \mathrm{for} \hspace{0.1cm} i=1,\dots, n,
 \]
@@ -60,7 +60,7 @@ Here we introduce a disctretization of the derivative. In order to do it we disc
 \end{cases},
 \end{equation}
 
-here we use $v_0 = v_{n+1} = 0$ conditions and miultiply the right hand side of the equation with an $ h^2 $. To simplify this we now introduce a new function $\tilde{b}_i=h^2f_i$. This system can be now written in a matrix form as:
+here we use $v_0 = v_{n+1} = 0$ conditions and multiply the right hand side of the equation with an $ h^2 $. To simplify this we now introduce a new function $\tilde{b}_i=h^2f_i$. This system can be now written in a matrix form as:
 \begin{equation}\label{equ:three}
    {\bf A}{\bf v} = \tilde{{\bf b}},
 \end{equation}
@@ -104,8 +104,8 @@ In our case we have a tridiagonal matrix with the same elements along the main d
 This kind of SLAE can be solved using different linear algebra methods. In the next section we will discuss some of them.
 \section{Theory and methods}
 \subsection{Gaussian elimination (GE)} 
-When we have a SLAE formulated as in (3), we would like to change the matrix $ A $ so it become all zeroes below the diagonal. The most straightforward way to do it is Gauss elimination. \\*
-The algorithm for the Gaussian elimination can be described as to main operations the forward substitution and the backward substitution. In the first part, the forward substitution, we would transform the original matrix $ A $ to some other matrix, with zeroes below the main diagonal. This can be done using some operations with matrix rows. We are using the first row to get rid of the elements below the diagonal in the first column. This operation however will change the other matrix elements. After this we are using the second row to eliminate all the elements below the diagonal in the second column and so on. Gaussian elimination require $ n^{3} $ FLOPS. In our case we are lucky to have tridiagonal matrix, so the only elements to be changed are the elements along the diagonal. So in our algorithm we can treat $ A $ as a three vectors (or arrays), not as a square matrix $ n\times n $. This will make our life much easier and the algorithm will be faster.
+When we have a SLAE formulated as in (3), we would like to change the matrix $ A $ so it become all zeros below the diagonal. The most straightforward way to do it is Gauss elimination. \\*
+The algorithm for the Gaussian elimination can be described as to main operations the forward substitution and the backward substitution. In the first part, the forward substitution, we would transform the original matrix $ A $ to some other matrix, with zeros below the main diagonal. This can be done using some operations with matrix rows. We are using the first row to get rid of the elements below the diagonal in the first column. This operation however will change the other matrix elements. After this we are using the second row to eliminate all the elements below the diagonal in the second column and so on. Gaussian elimination require $ n^{3} $ FLOPS. In our case we are lucky to have tridiagonal matrix, so the only elements to be changed are the elements along the diagonal. So in our algorithm we can treat $ A $ as a three vectors (or arrays), not as a square matrix $ n\times n $. This will make our life much easier and the algorithm will be faster.
 The new matrix will look as follows 
 
 \begin{equation}
@@ -141,14 +141,14 @@ v_{1}= \frac{{\tilde{b}\textprime_{1}-c_{1}v_{2}}}{{b}\textprime_{1}} \\
 \end{cases},
 \end{equation}
 
-This is brute force algorithm for GE in case of tridiagonal matrix (sometimes called Thomas algorithm). This arlorithm require $ 9n-8 $ floating points operations (FLOPS). In the program we will, however test two algorithms. The second one is adjusted to our case where we have same elements along the diagonals, so we can just pre-calculate some coefficients. We call this impimentation the optimized GE and it is easy to show that such optimization reduces the number of FLOPS to $ 7n-6 $. In the results section we will go back to it and compare the time needed to implement the algorithms in a adjusted and in a brute force way. Code section with implementation of algorithm can be found at \url{https://github.com/andrei-fys/fys4150_project1/blob/master/gauss.cpp#L64:L77}.
+This is brute force algorithm for GE in case of tridiagonal matrix (sometimes called Thomas algorithm). This algorithm require $ 9n-8 $ floating points operations (FLOPS). In the program we will, however test two algorithms. The second one is adjusted to our case where we have same elements along the diagonals, so we can just pre-calculate some coefficients. We call this implementation the optimized GE and it is easy to show that such optimization reduces the number of FLOPS to $ 7n-6 $. In the results section we will go back to it and compare the time needed to implement the algorithms in a adjusted and in a brute force way. Code section with implementation of algorithm can be found at \url{https://github.com/andrei-fys/fys4150_project1/blob/master/gauss.cpp#L64:L77}.
 
 \subsection{LU decomposition}
 This is another way to solve (3) using the linear algebra methods. In this case we will look for a way to write a matrix $ A $ in a following form
 \begin{equation}
 A=LU
 \end{equation}
-here $ L $ is lower triangular matrix and $ U $ is upper triangular matrix. It's important that $ L $ to have only $ 1 $ on the main diagonal. Easy to show that $ \det A $ in this case is equal to $ \det U $. In order to implement this method we are going to use one of the libraries in C++, so I will not derive the algorithm here. For the detailed mathematical description please refer to \cite{one}. The detailed programming implimentation is discussed in \cite{two}.
+here $ L $ is lower triangular matrix and $ U $ is upper triangular matrix. It's important that $ L $ to have only $ 1 $ on the main diagonal. Easy to show that $ \det A $ in this case is equal to $ \det U $. In order to implement this method we are going to use one of the libraries in C++. We will not derive the algorithm here. For the detailed mathematical description please refer to \cite{one}. The detailed programming implementation is discussed in \cite{two}.
 The most important thing here is that we will need the whole matrix $ A $, not the the arrays that represent the diagonal as we can do it in the GE. The number of FLOPS for such algorithm is proportional to $ n^{3} $.
 
 \newpage
@@ -197,7 +197,7 @@ On figure \ref{fig:gauss100} numerical($V_i$) and exact($U_i$) solutions plotted
 In this project we apply the linear algebra methods for the SLAE obtained after discretization of Poisson equation. It turns out that both Gaussian Elimination and LU decomposition gives us the same numerical precision. However, the LU decomposition takes much more CPU time. At the same time the problem we solved was quite simple, for more complicated tasks, for example, finding the inverse of the matrix LU should be a much better tool to be used.
 
 \newpage
-\begin{thebibliography}{9}
+\begin{thebibliography}{2}
 \bibitem{one} 
 Morten Hjorth-Jensen. 
 \textit{Computational Physics
