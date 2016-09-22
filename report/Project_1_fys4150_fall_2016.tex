@@ -112,10 +112,10 @@ The new matrix will look as follows
     {\bf A} = \left(\begin{array}{cccccc}
                              b_1& c_1 & 0 &\dots   & \dots &\dots \\
                            0 & {b_2}\textprime=b_2-c_{1}\frac{a_1}{b_1} & c_2 &\dots &\dots &\dots \\
-                           & 0 & {b_3}\textprime=b_3-c_{2}\frac{a_2}{{b_2}\textprime} & c_3 & \dots & \dots \\
+                           & 0 & {b_3}\textprime=b_3-c_{2}\frac{a_2}{{b}\textprime_{2}}  & c_3 & \dots & \dots \\
                            & \dots   & \dots &\dots   &\dots & \dots \\
                            &   &  &0  &\dots & c_{n-1} \\
-                           &    &  &   &0 & {b_n}\textprime=b_{n}-c_{n-1}\frac{a_{n-1}}{{b_{n-1}}\textprime} \\
+                           &    &  &   &0 & {b_n}\textprime=b_{n}-c_{n-1}\frac{a_{n-1}}{{b}\textprime_{n-1}}  \\
                       \end{array} \right),
 \end{equation}
 After this we also need to change the right hand side part of the SLAE, the vector $ \tilde{b} $. It will now be written as follows
@@ -126,7 +126,7 @@ After this we also need to change the right hand side part of the SLAE, the vect
                            \dots \\
                            \dots \\
                           \dots \\
-                           {\tilde{b}_n}\textprime=\tilde{b}_n - \tilde{b}_{n-1}\frac{a_{n-1}}{b_{n-1}}\\
+                           {\tilde{b}_n}\textprime=\tilde{b}_n - \tilde{b}_{n-1}\frac{a_{n-1}}{{b}\textprime_{n-1}} \\
                       \end{array} \right).
 \end{equation}
 What we have done so far is so called forward substitution. The GE consist of two big parts: the forward substitution (FS) and the backward substitution(BS). After we done the FS we should perform the BS to find the unknown vector $ v $ form (3). \\
@@ -149,7 +149,7 @@ This is another way to solve (3) using the linear algebra methods. In this case 
 A=LU
 \end{equation}
 here $ L $ is lower triangular matrix and $ U $ is upper triangular matrix. It's important that $ L $ to have only $ 1 $ on the main diagonal. Easy to show that $ \det A $ in this case is equal to $ \det U $. In order to implement this method we are going to use one of the libraries in C++. We will not derive the algorithm here. For the detailed mathematical description please refer to \cite{one}. The detailed programming implementation is discussed in \cite{two}.
-The most important thing here is that we will need the whole matrix $ A $, not the the arrays that represent the diagonal as we can do it in the GE. The number of FLOPS for such algorithm is proportional to $ n^{3} $.
+The most important thing here is that we will need the whole matrix $ A $, not the three arrays that represent the diagonals as we can do it in the GE. The number of FLOPS for such algorithm is proportional to $ n^{3} $.
 
 \newpage
 \section{Results and discussion}
