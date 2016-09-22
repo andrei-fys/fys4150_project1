@@ -194,7 +194,9 @@ On figure \ref{fig:gauss100} numerical($V_i$) and exact($U_i$) solutions plotted
 \end{figure}
 \newpage
 \section{Conclusion and further research}
-In this project we apply the linear algebra methods for the SLAE obtained after discretization of Poisson equation. It turns out that both Gaussian Elimination and LU decomposition gives us the same numerical precision. However, the LU decomposition takes much more CPU time. At the same time the problem we solved was quite simple, for more complicated tasks, for example, finding the inverse of the matrix LU should be a much better tool to be used.
+In this project we apply the linear algebra methods for the SLAE obtained after discretization of Poisson equation. It turns out that both Gaussian Elimination and LU decomposition gives us the same numerical precision. However, the LU decomposition takes much more CPU time. It was shown that CPU time correlates with the number of FLOPS for the method. 
+\\*
+However, even LU turns out to be not the best choice for our problem, it's still quite a good method. The problem we solved was quite simple, for more complicated tasks, for example, finding the inverse of the matrix LU should be a much better tool to be used.
 
 \newpage
 \begin{thebibliography}{2}
